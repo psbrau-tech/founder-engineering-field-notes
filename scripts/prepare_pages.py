@@ -10,7 +10,9 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 ARTICLES = ROOT / "articles"
 SITE = ROOT / "site"
-GENERATED = SITE / "_generated_articles"
+# Use a normal Jekyll source directory. Directories beginning with an underscore
+# are reserved for Jekyll internals and are not emitted as ordinary pages.
+GENERATED = SITE / "articles"
 DATA = SITE / "_data" / "articles.yml"
 
 
