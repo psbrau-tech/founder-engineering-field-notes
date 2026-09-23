@@ -16,7 +16,6 @@ import subprocess
 import sys
 import time
 import urllib.error
-import urllib.parse
 import urllib.request
 from pathlib import Path
 
@@ -170,10 +169,6 @@ def list_existing(api_key: str) -> dict[str, list[dict[str, object]]]:
 
 
 def sync(api_key: str, articles: list[tuple[Path, dict[str, object], str]]) -> None:
-    if not articles:
-        print("No changed articles are eligible for DEV syndication.")
-        return
-
     existing = list_existing(api_key)
     for path, meta, body in articles:
         desired = desired_article(meta, body)
@@ -228,6 +223,9 @@ def main() -> int:
     try:
         if args.dry_run:
             dry_run(articles)
+            return 0
+        if not articles:
+            print("No changed articles are eligible for DEV syndication.")
             return 0
         api_key = os.environ.get("DEV_API_KEY", "").strip()
         if not api_key:
