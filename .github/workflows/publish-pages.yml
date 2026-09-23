@@ -8,6 +8,7 @@ on:
       - "articles/**"
       - "site/**"
       - "scripts/prepare_pages.py"
+      - "scripts/verify_pages_output.py"
       - ".github/workflows/publish-pages.yml"
   workflow_dispatch:
 
@@ -43,6 +44,9 @@ jobs:
         with:
           source: ./site
           destination: ./_site
+
+      - name: Verify Pages output
+        run: python scripts/verify_pages_output.py
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v4
