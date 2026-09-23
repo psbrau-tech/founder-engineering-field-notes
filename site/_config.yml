@@ -1,5 +1,7 @@
 title: "Founder Engineering Field Notes"
 description: "Practical engineering lessons for founders and small technical teams."
+url: "https://psbrau-tech.github.io"
+baseurl: "/founder-engineering-field-notes"
 markdown: kramdown
 permalink: pretty
 exclude:
