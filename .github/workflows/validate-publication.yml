@@ -31,3 +31,12 @@ jobs:
 
       - name: Prepare Pages input
         run: python scripts/prepare_pages.py
+
+      - name: Build Pages preflight
+        uses: actions/jekyll-build-pages@v1
+        with:
+          source: ./site
+          destination: ./_site
+
+      - name: Verify Pages output
+        run: python scripts/verify_pages_output.py
