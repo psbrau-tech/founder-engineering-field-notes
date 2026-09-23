@@ -1,0 +1,58 @@
+name: Syndicate approved articles to DEV
+
+on:
+  workflow_run:
+    workflows:
+      - Publish GitHub Pages
+    types:
+      - completed
+    branches:
+      - main
+  workflow_dispatch:
+    inputs:
+      sync_all:
+        description: "Sync every published, DEV-ready article instead of only the latest changed article"
+        required: true
+        default: true
+        type: boolean
+
+permissions:
+  contents: read
+
+concurrency:
+  group: dev-syndication
+  cancel-in-progress: false
+
+jobs:
+  syndicate:
+    if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out canonical source
+        uses: actions/checkout@v6
+        with:
+          ref: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.head_sha || github.sha }}
+          fetch-depth: 2
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.13"
+
+      - name: Sync article changed by the successful Pages publication
+        if: ${{ github.event_name == 'workflow_run' }}
+        env:
+          DEV_API_KEY: ${{ secrets.DEV_API_KEY }}
+        run: python scripts/syndicate_dev.py --changed
+
+      - name: Sync all eligible articles
+        if: ${{ github.event_name == 'workflow_dispatch' && inputs.sync_all }}
+        env:
+          DEV_API_KEY: ${{ secrets.DEV_API_KEY }}
+        run: python scripts/syndicate_dev.py --all
+
+      - name: Sync only the latest changed article
+        if: ${{ github.event_name == 'workflow_dispatch' && !inputs.sync_all }}
+        env:
+          DEV_API_KEY: ${{ secrets.DEV_API_KEY }}
+        run: python scripts/syndicate_dev.py --changed

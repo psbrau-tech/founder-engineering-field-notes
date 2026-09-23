@@ -29,6 +29,9 @@ jobs:
       - name: Validate public content
         run: python scripts/validate_publication.py
 
+      - name: Validate DEV syndication payloads
+        run: python scripts/syndicate_dev.py --all --dry-run
+
       - name: Prepare Pages input
         run: python scripts/prepare_pages.py
 
