@@ -1,0 +1,6 @@
+title: "Founder Engineering Field Notes"
+description: "Practical engineering lessons for founders and small technical teams."
+markdown: kramdown
+permalink: pretty
+exclude:
+  - README.md

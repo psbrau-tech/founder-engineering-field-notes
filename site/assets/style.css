@@ -1,0 +1,36 @@
+:root {
+  color-scheme: light dark;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  line-height: 1.6;
+}
+body {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 0 1.25rem 3rem;
+}
+.site-header {
+  padding: 1.5rem 0;
+  border-bottom: 1px solid currentColor;
+  margin-bottom: 2rem;
+}
+.site-header a {
+  font-weight: 700;
+  text-decoration: none;
+}
+main img {
+  max-width: 100%;
+}
+pre {
+  overflow-x: auto;
+  padding: 1rem;
+  border: 1px solid currentColor;
+}
+code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+footer {
+  margin-top: 4rem;
+  padding-top: 1rem;
+  border-top: 1px solid currentColor;
+  font-size: 0.9rem;
+}

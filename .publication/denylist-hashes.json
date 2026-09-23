@@ -1,0 +1,33 @@
+{
+  "normalization": "lowercase_alphanumeric",
+  "entries": [
+    {
+      "length": 13,
+      "sha256": "e4d7bdbf90ec04c13189a24c56447e10c1780d142c5287d91264c3172a4bf775"
+    },
+    {
+      "length": 15,
+      "sha256": "414bf3fb2214031f543373bd11b60a55d88fc20a121cebc4ea5358ca4cd90c60"
+    },
+    {
+      "length": 23,
+      "sha256": "d546cc452076e25dcbcea0b6989f1a836bf7c21e77630533ccc4d99e4155d085"
+    },
+    {
+      "length": 35,
+      "sha256": "d77c0786046813bd23bb34ae8ef8b90b86bc5b18ef6db09b9869ddc4157e9a77"
+    },
+    {
+      "length": 22,
+      "sha256": "d12a0d4761a4573b9e038625b673ad478fd6d6e8fe11b230ef9595be1b923c3b"
+    },
+    {
+      "length": 16,
+      "sha256": "ba5fa2f3a072a13e888798c5df849ebe3f1f8ebd4cdcee1bed7faeef4b9eb441"
+    },
+    {
+      "length": 16,
+      "sha256": "f05cb66f2d65d200f71cc7f36faeca4e72bcb7b334f28c490f8f388d582c480a"
+    }
+  ]
+}

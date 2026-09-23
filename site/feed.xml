@@ -1,0 +1,19 @@
+---
+layout: null
+permalink: /feed.xml
+---
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>{{ site.title | xml_escape }}</title>
+  <id>{{ site.url | append: site.baseurl | append: '/' }}</id>
+  <updated>{{ site.time | date_to_xmlschema }}</updated>
+  {% for article in site.data.articles %}
+  <entry>
+    <title>{{ article.title | xml_escape }}</title>
+    <id>{{ site.url | append: site.baseurl | append: article.url }}</id>
+    <link href="{{ site.url | append: site.baseurl | append: article.url }}"/>
+    <updated>{{ article.verified_on | date_to_xmlschema }}</updated>
+    <summary>{{ article.summary | xml_escape }}</summary>
+  </entry>
+  {% endfor %}
+</feed>
