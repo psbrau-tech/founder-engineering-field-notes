@@ -9,7 +9,9 @@ on:
       - "site/**"
       - "scripts/prepare_pages.py"
       - "scripts/verify_pages_output.py"
+      - "scripts/syndicate_dev.py"
       - ".github/workflows/publish-pages.yml"
+      - ".github/workflows/publish-dev.yml"
   workflow_dispatch:
 
 permissions:
