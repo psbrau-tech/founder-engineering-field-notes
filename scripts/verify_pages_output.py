@@ -13,12 +13,18 @@ OUTPUT = ROOT / "_site"
 def main() -> int:
     errors: list[str] = []
 
-    required = [OUTPUT / "index.html", OUTPUT / "feed.xml", OUTPUT / "sitemap.xml"]
+    required = [
+        OUTPUT / "index.html",
+        OUTPUT / "categories" / "index.html",
+        OUTPUT / "feed.xml",
+        OUTPUT / "sitemap.xml",
+    ]
     for path in required:
         if not path.is_file():
             errors.append(f"missing required site output: {path.relative_to(ROOT)}")
 
     homepage = (OUTPUT / "index.html").read_text(encoding="utf-8") if (OUTPUT / "index.html").is_file() else ""
+    categories = (OUTPUT / "categories" / "index.html").read_text(encoding="utf-8") if (OUTPUT / "categories" / "index.html").is_file() else ""
     feed = (OUTPUT / "feed.xml").read_text(encoding="utf-8") if (OUTPUT / "feed.xml").is_file() else ""
     sitemap = (OUTPUT / "sitemap.xml").read_text(encoding="utf-8") if (OUTPUT / "sitemap.xml").is_file() else ""
 
@@ -45,6 +51,8 @@ def main() -> int:
             errors.append(f"built article page does not contain expected title: {slug}")
         if canonical_path not in homepage:
             errors.append(f"homepage does not link published article: {canonical_path}")
+        if canonical_path not in categories:
+            errors.append(f"category index does not link published article: {canonical_path}")
         if canonical_path not in feed:
             errors.append(f"feed does not reference published article: {canonical_path}")
         if canonical_path not in sitemap:
