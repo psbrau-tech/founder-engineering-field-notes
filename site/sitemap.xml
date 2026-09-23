@@ -1,0 +1,16 @@
+---
+layout: null
+permalink: /sitemap.xml
+---
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>{{ site.url | append: site.baseurl | append: '/' }}</loc>
+  </url>
+  {% for article in site.data.articles %}
+  <url>
+    <loc>{{ site.url | append: site.baseurl | append: article.url }}</loc>
+    <lastmod>{{ article.verified_on }}</lastmod>
+  </url>
+  {% endfor %}
+</urlset>
