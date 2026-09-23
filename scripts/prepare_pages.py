@@ -84,7 +84,10 @@ def main() -> int:
             f"  summary: {yaml_quote(str(meta['summary']))}",
             f"  url: {yaml_quote(str(meta['canonical_path']))}",
             f"  verified_on: {yaml_quote(str(meta['verified_on']))}",
+            "  categories:",
         ])
+        for category in meta.get("categories", []):
+            lines.append(f"    - {yaml_quote(str(category))}")
     if not lines:
         lines.append("[]")
     DATA.write_text("\n".join(lines) + "\n", encoding="utf-8")
