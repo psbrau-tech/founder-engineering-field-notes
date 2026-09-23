@@ -10,6 +10,10 @@
 <body>
   <header class="site-header">
     <a href="{{ '/' | relative_url }}">{{ site.title }}</a>
+    <nav aria-label="Primary">
+      <a href="{{ '/categories/' | relative_url }}">Categories</a>
+      <a href="{{ '/feed.xml' | relative_url }}">RSS</a>
+    </nav>
   </header>
   <main>
     {{ content }}
