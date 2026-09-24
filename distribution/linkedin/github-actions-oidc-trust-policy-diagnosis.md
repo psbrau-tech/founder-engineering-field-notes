@@ -1,17 +1,27 @@
 # LinkedIn Package: GitHub Actions OIDC Trust-Policy Diagnosis
 
-## Headline
+## Post
 
-When GitHub Actions OIDC Fails, Check Trust Before Permissions
+One of the easiest ways to waste an afternoon in cloud deployment is to debug the wrong permission layer.
 
-## Short post
+We hit a deployment failure where the natural instinct was to ask, “What AWS permission is missing?”
 
-A GitHub Actions job that cannot assume an AWS role is easy to misdiagnose as an IAM permission problem.
+That was the wrong question.
 
-But `AssumeRoleWithWebIdentity` fails before the role's normal AWS service permissions come into play. If the OIDC provider, audience, or subject claim does not match the trust policy, adding more service permissions cannot fix it.
+The workflow was being rejected before it ever reached the role’s normal service permissions. The real problem was identity and trust: the credentials presented by the automation did not match what the role was configured to trust.
 
-The practical debugging order is identity first, authorization second: verify `id-token: write`, the provider, the expected audience, and the exact GitHub `sub` format before touching the role's service permissions.
+The reusable lesson is simple:
 
-That last step matters even more now because GitHub repositories created after July 15, 2026 use an immutable default subject format that includes owner and repository IDs.
+**When automation cannot assume a role, verify identity before authorization.**
 
-The field note covers the diagnostic sequence, a safe generic trust-policy shape, and the preflight that should catch this before a deployment workflow starts.
+Who is asking? What token is being presented? What audience and subject does it contain? Does the trust policy actually match those values?
+
+Only after that succeeds should you troubleshoot what the role is allowed to do.
+
+We turned that diagnosis into a preflight check so the same class of failure is caught before a deployment starts.
+
+For a small team, that is the real payoff. A failed operation should not just get fixed. It should make the engineering system better at catching the next one.
+
+## Optional canonical link
+
+https://psbrau-tech.github.io/founder-engineering-field-notes/articles/github-actions-oidc-trust-policy-diagnosis/

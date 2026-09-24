@@ -1,17 +1,29 @@
 # LinkedIn Package: CloudFormation Generated Role Names and Rollback
 
-## Headline
+## Post
 
-CloudFormation Least Privilege Has to Match Physical IAM Names, Not Assumptions
+A security policy built on an assumption can fail just as badly as a missing permission.
 
-## Short post
+We learned that during a deployment where our least-privilege policy assumed infrastructure-created roles would follow a particular naming pattern.
 
-A least-privilege CloudFormation role can be scoped too narrowly for a reason that is easy to miss: the physical IAM role name CloudFormation actually creates may not match the naming pattern you inferred from the logical resource.
+They did not.
 
-That can break twice. The forward deployment may fail on tagging or policy operations, and rollback can fail against the same generated role family when it tries to detach or delete what was created.
+That caused two problems: the deployment failed on the forward path, and rollback ran into the same boundary when it tried to clean up what had already been created.
 
-The wrong fix is to replace a bounded role ARN with `role/*`.
+The easy fix would have been to widen the policy until the deployment passed.
 
-The safer sequence is to inspect the denied resource ARN, identify the actual physical-name pattern, update only the bounded role family, and verify both forward and rollback permissions. `iam:PassRole` should remain constrained by both role resource and destination service.
+We deliberately did not do that.
 
-The field note turns a naming mismatch into a reusable lifecycle-permission preflight for CloudFormation.
+Instead, we inspected the actual resource identities being created, tightened the policy around the verified pattern, and checked the permissions needed for both the forward path and rollback.
+
+The reusable lesson was bigger than one IAM rule:
+
+**Least privilege has to match what the system actually creates, and it has to cover the full lifecycle—including the undo path.**
+
+That last part matters. A deployment is not safely permissioned if it can create resources but cannot unwind them when something later fails.
+
+The permanent improvement was to treat physical resource identity and rollback permissions as part of deployment preflight, not something to discover during recovery.
+
+## Optional canonical link
+
+https://psbrau-tech.github.io/founder-engineering-field-notes/articles/cloudformation-generated-role-names-and-rollback/

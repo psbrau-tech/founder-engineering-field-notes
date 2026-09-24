@@ -1,17 +1,32 @@
 # LinkedIn Package: CloudFormation Provider-Side API Dependencies
 
-## Headline
+## Post
 
-CloudFormation Least Privilege Can Fail in an Adjacent AWS Service
+Least privilege can fail in a way that makes the obvious fix dangerous.
 
-## Short post
+We had a deployment role that appeared to have the permissions its infrastructure needed. Then the deployment failed with an access denial from a different AWS service than the one we were actively configuring.
 
-A CloudFormation execution role can appear to cover every service in the template and still fail with an unexpected `AccessDenied`.
+The tempting response would have been to attach a broader policy and move on.
 
-The missing permission may belong to an adjacent service used by the resource operation itself. In one validated case, a load-balancer path needed an EC2 lookup action. In another, a Web ACL association also depended on load-balancer-side permissions.
+That would have fixed the symptom while weakening the security boundary.
 
-The important response is not to attach a broad managed policy. Capture the exact denied action, identify the active resource operation, verify the current provider path, and add only the narrow dependency with the strongest supported boundary.
+The real issue was a hidden dependency in the execution path: the resource operation needed an adjacent service API behind the scenes.
 
-There is another reason to verify rather than copy old fixes: AWS integration paths change. Current WAF documentation uses a newer ALB association permission model than the one involved in the earlier incident.
+The better debugging sequence was:
 
-The field note turns those failures into a reusable dependency-discovery and preflight pattern for least-privilege CloudFormation.
+1. Capture the exact denied action.
+2. Identify the resource operation that triggered it.
+3. Verify the current platform behavior.
+4. Add only the narrow dependency the operation actually needs.
+
+The broader lesson applies well beyond AWS:
+
+**Your system’s real dependency graph is defined by what executes, not by what the architecture diagram suggests.**
+
+We now treat unexpected cross-service permissions as something to document and preflight rather than something to solve with broader access.
+
+That turns a frustrating deployment failure into a permanent improvement in both reliability and least privilege.
+
+## Optional canonical link
+
+https://psbrau-tech.github.io/founder-engineering-field-notes/articles/cloudformation-provider-side-api-dependencies/

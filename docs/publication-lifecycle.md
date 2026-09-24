@@ -39,3 +39,7 @@ See [`dev-syndication.md`](dev-syndication.md) for the API, credential, idempote
 ## 7. LinkedIn
 
 LinkedIn remains a generated manual package until a stable approved automation path exists.
+
+The LinkedIn package is not a technical abstract or a shortened DEV article. It translates the verified engineering lesson for technical founders and engineering leaders, emphasizing the wasted effort or risk, the diagnostic lesson, the permanent control added, and the reusable rule. Detailed runbook material remains in the canonical article.
+
+See [`linkedin-distribution.md`](linkedin-distribution.md) for the audience, editorial pattern, package format, and manual-publishing contract.
